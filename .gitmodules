@@ -1,0 +1,6 @@
+[submodule "framework"]
+	path = framework
+	url = https://github.com/braymaekers/framework
+[submodule "platform"]
+	path = platform
+	url = https://github.com/braymaekers/platform
