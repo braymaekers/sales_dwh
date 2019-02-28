@@ -5,5 +5,5 @@
 export PENTAHO_ENV=$(basename $PWD)
 export PROJECT_NAME=$(basename $(dirname $(dirname $PWD)))
 
-cd "$PWD"/../../../framework/configuration
+cd "$PWD"/../../framework/configuration
 sh kitchen.sh "$@"
