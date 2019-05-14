@@ -460,7 +460,22 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>256</xloc>
+      <xloc>352</xloc>
+      <yloc>32</yloc>
+      <attributes_kjc />
+    </entry>
+    <entry>
+      <name>Write to log</name>
+      <description />
+      <type>WRITE_TO_LOG</type>
+      <attributes />
+      <logmessage />
+      <loglevel>Basic</loglevel>
+      <logsubject>*** INFO *** ${TESTS_HOME}/tr_webservice_test.ktr</logsubject>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>224</xloc>
       <yloc>32</yloc>
       <attributes_kjc />
     </entry>
@@ -468,12 +483,21 @@
   <hops>
     <hop>
       <from>Start</from>
-      <to>tr_webservice_test</to>
+      <to>Write to log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Write to log</from>
+      <to>tr_webservice_test</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
