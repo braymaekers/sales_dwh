@@ -5,9 +5,9 @@
 	  class="basic.validations"
 	  package="test"
     />
-    <test name="tr_webservice_test"
+    <test name="jb_webservice_test"
 	  order="2"
-	  location="tr_webservice_test"			
+	  location="jb_webservice_test"			
 	  class="basic.validations"
 	  package="test"
     />
