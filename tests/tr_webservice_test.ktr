@@ -489,76 +489,30 @@
   <order>
     <hop>
       <from>Generate rows</from>
-      <to>Delay row</to>
+      <to>Generate random value</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Delay row</from>
-      <to>Abort</to>
-      <enabled>N</enabled>
+      <from>Generate random value</from>
+      <to>remainder</to>
+      <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Generate rows</from>
-      <to>Web services lookup</to>
+      <from>remainder</from>
+      <to>even int</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>even int</from>
+      <to>Abort</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>even int</from>
+      <to>success</to>
       <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>Abort</name>
-    <type>Abort</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <row_threshold>1</row_threshold>
-    <message>Connection to Webservice failed</message>
-    <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT</abort_option>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Delay row</name>
-    <type>Delay</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <timeout>5</timeout>
-    <scaletime>seconds</scaletime>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>320</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Generate rows</name>
     <type>RowGenerator</type>
@@ -571,6 +525,18 @@
       <schema_name />
     </partitioning>
     <fields>
+      <field>
+        <name>two</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
     </fields>
     <limit>1</limit>
     <never_ending>N</never_ending>
@@ -586,14 +552,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>160</xloc>
-      <yloc>64</yloc>
+      <xloc>64</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Web services lookup</name>
-    <type>WebServiceLookup</type>
+    <name>Generate random value</name>
+    <type>RandomValue</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -602,27 +568,53 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <wsURL />
-    <wsOperation />
-    <wsOperationRequest />
-    <wsOperationNamespace />
-    <wsInFieldContainer />
-    <wsInFieldArgument />
-    <wsOutFieldContainer />
-    <wsOutFieldArgument />
-    <proxyHost />
-    <proxyPort />
-    <httpLogin />
-    <httpPassword />
-    <callStep>1000</callStep>
-    <passingInputData>Y</passingInputData>
-    <compatible>N</compatible>
-    <repeating_element />
-    <reply_as_string>N</reply_as_string>
-    <fieldsIn>
-      </fieldsIn>
-    <fieldsOut>
-      </fieldsOut>
+    <fields>
+      <field>
+        <name>int</name>
+        <type>random integer</type>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>192</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>remainder</name>
+    <type>Calculator</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>remainder</field_name>
+      <calc_type>REMAINDER</calc_type>
+      <field_a>int</field_a>
+      <field_b>two</field_b>
+      <field_c />
+      <value_type>Integer</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask />
+      <decimal_symbol />
+      <grouping_symbol />
+      <currency_symbol />
+    </calculation>
     <attributes />
     <cluster_schema />
     <remotesteps>
@@ -633,7 +625,105 @@
     </remotesteps>
     <GUI>
       <xloc>320</xloc>
-      <yloc>160</yloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>even int</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Abort</send_true_to>
+    <send_false_to>success</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>remainder</leftvalue>
+        <function>=</function>
+        <rightvalue />
+        <value>
+          <name>constant</name>
+          <type>Integer</type>
+          <text>0</text>
+          <length>-1</length>
+          <precision>0</precision>
+          <isnull>N</isnull>
+          <mask>####0;-####0</mask>
+        </value>
+      </condition>
+    </compare>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>success</name>
+    <type>Dummy</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Abort</name>
+    <type>Abort</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <row_threshold>0</row_threshold>
+    <message>Not able to connect to Webservice</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT</abort_option>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -642,5 +732,21 @@
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
-  <attributes />
+  <attributes>
+    <group>
+      <name>explorerState</name>
+      <attribute>
+        <key>even int</key>
+        <value />
+      </attribute>
+      <attribute>
+        <key>remainder</key>
+        <value />
+      </attribute>
+      <attribute>
+        <key>success</key>
+        <value />
+      </attribute>
+    </group>
+  </attributes>
 </transformation>
