@@ -469,7 +469,7 @@
       <description />
       <type>WRITE_TO_LOG</type>
       <attributes />
-      <logmessage />
+      <logmessage>***</logmessage>
       <loglevel>Basic</loglevel>
       <logsubject>*** INFO *** ${TESTS_HOME}/tr_webservice_test.ktr</logsubject>
       <parallel>N</parallel>
