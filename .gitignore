@@ -1,5 +1,5 @@
 **/log/*.log
 **/.kettle/db.cache-*
 **/.kettle/shared.xml.backup
-**/test-reports/results_final.xml
 **/.DS_Store
+tests/test-reports/results_final.xml
