@@ -18,7 +18,7 @@
 	  location="jb_main_sales_dwh_staging_test"
     type="kjb"
 	  class="solution.validations"
-	  package="testBeppe"
+	  package="test"
     />
   <!--<test name="load_dimensions_test"
               order="4"
