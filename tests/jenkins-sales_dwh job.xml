@@ -64,3 +64,4 @@ sh kitchen.sh &quot;-file=${WORKSPACE}/../framework/tests/jb_main_test_executor.
     </hudson.tasks.junit.JUnitResultArchiver>
   </publishers>
   <buildWrappers/>
+</project>  
